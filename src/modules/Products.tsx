@@ -5,7 +5,8 @@ import Filters from "../components/Filters";
 import filterProduct from "../utils/filterProduct";
 
 const Products = () => {
-  const { loading, items, filter } = useTable("./data/products.json", 30);
+  const { loading, items, filter, pages, currentPage, setCurrentPage } =
+    useTable("./data/products.json", 30);
 
   return (
     <div>
@@ -17,7 +18,30 @@ const Products = () => {
       />
 
       {/* `useTable` hook provides `pages`, `currentPage` and `setCurrentPage` handler */}
-      {/* todo: use above elements to create a functional pagination system */}
+      {/* use above elements to create a functional pagination system */}
+      <div>
+        <p>
+          Page {currentPage + 1} / {pages}
+        </p>
+        {currentPage + 1 > 1 && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+            }}
+          >
+            Previous
+          </button>
+        )}
+        {currentPage + 1 < pages && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+            }}
+          >
+            Next
+          </button>
+        )}
+      </div>
 
       {/* todo: implement sort feature for each column */}
 
@@ -37,12 +61,12 @@ const Products = () => {
           {
             name: "price",
             description: "Price",
-            width: 64,
+            width: 100,
           },
           {
             name: "quantity",
             description: "Quantity",
-            width: 64,
+            width: 100,
           },
         ]}
       />
